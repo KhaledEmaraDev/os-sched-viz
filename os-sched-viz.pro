@@ -7,17 +7,20 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 HEADERS += \
+    scheduler.h \
     model/job.h \
     model/tablemodel.h \
     model/timeline.h \
 
 
 
+
 SOURCES += \
-        main.cpp \
-        model/job.cpp \
+    main.cpp \
+    scheduler.cpp \
+    model/job.cpp \
     model/tablemodel.cpp \
-        model/timeline.cpp \
+    model/timeline.cpp \
 
 
 RESOURCES += qml.qrc

@@ -6,6 +6,8 @@ Job::Job()
     : m_id( this->m_globalId), m_label(""), m_arrivalTime(0), m_duration(0),
       m_priority(0)
 {
+    this->m_startTime = 0;
+    this->m_quantumPriority = m_arrivalTime;
     this->m_globalId++;
 }
 
@@ -19,6 +21,8 @@ Job::Job(const QString &label,
       m_duration(duration),
       m_priority(priority)
 {
+    this->m_startTime = 0;
+    this->m_quantumPriority = m_arrivalTime;
     this->m_globalId++;
 }
 
@@ -75,6 +79,25 @@ void Job::setStartTime(const quint32 &startTime)
 quint32 Job::endTime() const
 {
     return m_startTime + m_duration;
+}
+
+quint32 Job::quantumPriority() const
+{
+    return m_quantumPriority;
+}
+
+void Job::setQuantumPriority(const quint32 &quantumPriority)
+{
+    m_quantumPriority = quantumPriority;
+}
+
+std::ostream &operator<<(std::ostream &os, const Job &j) {
+    os << "Job Id: " << j.id() << "\n"
+       << "Job name: " << j.label().toStdString() << "\n"
+       << "Arrival time: " << j.arrivalTime() << "\n"
+       << "Start time: " << j.startTime() << "\n"
+       << "Durtion: " << j.duration() << "\n";
+    return os;
 }
 
 int JobModel::rowCount(const QModelIndex &parent) const

@@ -31,6 +31,16 @@ QList<Job> Scheduler::priority_nonpreemptive()
     return schedule_nonpreemptive(comp_priority_func);
 }
 
+QList<Job> Scheduler::fcfs()
+{
+
+}
+
+QList<Job> Scheduler::round_robin(qint32 quantum)
+{
+
+}
+
 QList<Job> Scheduler::schedule_preemptive(std::function<bool (Job &, Job &)> comp_func)
 {
     std::sort(wait_queue.begin(), wait_queue.end(), comp_arrival_func);

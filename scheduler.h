@@ -16,6 +16,8 @@ public:
     QList<Job> sjf_preemptive();
     QList<Job> priority_preemptive();
     QList<Job> priority_nonpreemptive();
+    QList<Job> fcfs();
+    QList<Job> round_robin(qint32 quantum);
     double average_waiting_time(const QList<Job>& jobs);
 
 private:
@@ -41,6 +43,12 @@ private:
         if(p1.priority() == p2.priority())
             return p1.arrivalTime() > p2.arrivalTime();
         return p1.priority() > p2.priority();
+    };
+
+    static constexpr auto comp_quantum_func = [](Job &p1, Job &p2) {
+        if(p1.quantumPriority() == p2.quantumPriority())
+            return p1.arrivalTime() > p2.arrivalTime();
+        return p1.quantumPriority() > p2.quantumPriority();
     };
 
 };

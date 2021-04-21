@@ -31,6 +31,11 @@ public:
     void setStartTime(const quint32 &startTime);
 
     quint32 endTime() const;
+    friend std::ostream &operator<<(std::ostream &os, const Job &j);
+
+    quint32 quantumPriority() const;
+    void setQuantumPriority(const quint32 &quantumPriority);
+
 private:
     static quint32 m_globalId;
 
@@ -40,6 +45,7 @@ private:
     quint32 m_duration;
     quint32 m_priority;
     quint32 m_startTime;
+    quint32 m_quantumPriority;
 };
 
 class JobModel : public QAbstractListModel
