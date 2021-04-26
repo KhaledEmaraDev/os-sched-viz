@@ -3,49 +3,52 @@
 
 #include <QAbstractTableModel>
 #include <QHash>
+#include <iostream>
 
 class Job
 {
 public:
     Job();
     Job(const QString &label,
-        const quint32 &arrivalTime,
-        const quint32 &duration,
-        const quint32 &priority);
+        const double &arrivalTime,
+        const double &duration,
+        const double &priority);
 
-    quint32 id() const;
+    int id() const;
 
     QString label() const;
     void setLabel(const QString &label);
 
-    quint32 arrivalTime() const;
-    void setArrivalTime(const quint32 &arrivalTime);
+    double arrivalTime() const;
+    void setArrivalTime(const double &arrivalTime);
 
-    quint32 duration() const;
-    void setDuration(const quint32 &duration);
+    double duration() const;
+    void setDuration(const double &duration);
 
-    quint32 priority() const;
-    void setPriority(const quint32 &priority);
+    double priority() const;
+    void setPriority(const double &priority);
 
-    quint32 startTime() const;
-    void setStartTime(const quint32 &startTime);
+    double startTime() const;
+    void setStartTime(const double &startTime);
 
-    quint32 endTime() const;
+    double endTime() const;
     friend std::ostream &operator<<(std::ostream &os, const Job &j);
 
-    quint32 quantumPriority() const;
-    void setQuantumPriority(const quint32 &quantumPriority);
+    int quantumPriority() const;
+    void setQuantumPriority(const int &quantumPriority);
+    void increaseQuantumPriority();
+    void decreaseQuantumPriority();
 
 private:
-    static quint32 m_globalId;
+    static int m_globalId;
 
-    quint32 m_id;
+    int m_id;
     QString m_label;
-    quint32 m_arrivalTime;
-    quint32 m_duration;
-    quint32 m_priority;
-    quint32 m_startTime;
-    quint32 m_quantumPriority;
+    double m_arrivalTime;
+    double m_duration;
+    double m_priority;
+    double m_startTime;
+    int m_quantumPriority;
 };
 
 class JobModel : public QAbstractListModel

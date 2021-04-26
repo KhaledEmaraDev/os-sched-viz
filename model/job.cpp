@@ -1,20 +1,20 @@
 #include <model/job.h>
 
-quint32 Job::m_globalId = 0;
+int Job::m_globalId = 0;
 
 Job::Job()
     : m_id( this->m_globalId), m_label(""), m_arrivalTime(0), m_duration(0),
       m_priority(0)
 {
     this->m_startTime = 0;
-    this->m_quantumPriority = m_arrivalTime;
+    this->m_quantumPriority = 0;
     this->m_globalId++;
 }
 
 Job::Job(const QString &label,
-         const quint32 &arrivalTime,
-         const quint32 &duration,
-         const quint32 &priority)
+         const double &arrivalTime,
+         const double &duration,
+         const double &priority)
     : m_id(this->m_globalId),
       m_label(label),
       m_arrivalTime(arrivalTime),
@@ -22,11 +22,11 @@ Job::Job(const QString &label,
       m_priority(priority)
 {
     this->m_startTime = 0;
-    this->m_quantumPriority = m_arrivalTime;
+    this->m_quantumPriority = 0;
     this->m_globalId++;
 }
 
-quint32 Job::id() const
+int Job::id() const
 {
     return m_id;
 }
@@ -40,55 +40,65 @@ void Job::setLabel(const QString &label)
     m_label = label;
 }
 
-quint32 Job::arrivalTime() const
+double Job::arrivalTime() const
 {
     return m_arrivalTime;
 }
-void Job::setArrivalTime(const quint32 &arrivalTime)
+void Job::setArrivalTime(const double &arrivalTime)
 {
     m_arrivalTime = arrivalTime;
 }
 
-quint32 Job::duration() const
+double Job::duration() const
 {
     return m_duration;
 }
-void Job::setDuration(const quint32 &duration)
+void Job::setDuration(const double &duration)
 {
     m_duration = duration;
 }
 
-quint32 Job::priority() const
+double Job::priority() const
 {
     return m_priority;
 }
-void Job::setPriority(const quint32 &priority)
+void Job::setPriority(const double &priority)
 {
     m_priority = priority;
 }
 
-quint32 Job::startTime() const
+double Job::startTime() const
 {
     return m_startTime;
 }
-void Job::setStartTime(const quint32 &startTime)
+void Job::setStartTime(const double &startTime)
 {
     m_startTime = startTime;
 }
 
-quint32 Job::endTime() const
+double Job::endTime() const
 {
     return m_startTime + m_duration;
 }
 
-quint32 Job::quantumPriority() const
+int Job::quantumPriority() const
 {
     return m_quantumPriority;
 }
 
-void Job::setQuantumPriority(const quint32 &quantumPriority)
+void Job::setQuantumPriority(const int &quantumPriority)
 {
     m_quantumPriority = quantumPriority;
+}
+
+void Job::increaseQuantumPriority()
+{
+    m_quantumPriority++;
+}
+
+void Job::decreaseQuantumPriority()
+{
+    m_quantumPriority--;
 }
 
 std::ostream &operator<<(std::ostream &os, const Job &j) {

@@ -36,7 +36,7 @@ QList<Job> Scheduler::fcfs()
 
 }
 
-QList<Job> Scheduler::round_robin(qint32 quantum)
+QList<Job> Scheduler::round_robin(double quantum)
 {
 
 }
@@ -45,9 +45,9 @@ QList<Job> Scheduler::schedule_preemptive(std::function<bool (Job &, Job &)> com
 {
     std::sort(wait_queue.begin(), wait_queue.end(), comp_arrival_func);
 
-    quint32 last_duration = 0;
-    quint32 last_start_time = 0;
-    quint32 current_time = 0;
+    double last_duration = 0;
+    double last_start_time = 0;
+    double current_time = 0;
 
     QList<Job> output_list;
     QList<Job> ready_queue;
@@ -113,9 +113,9 @@ QList<Job> Scheduler::schedule_nonpreemptive(std::function<bool (Job &, Job &)> 
 
     std::sort(wait_queue.begin(), wait_queue.end(), comp_arrival_func);
 
-    quint32 last_duration = 0;
-    quint32 last_start_time = 0;
-    quint32 current_time = 0;
+    double last_duration = 0;
+    double last_start_time = 0;
+    double current_time = 0;
 
     QList<Job> output_list;
     QList<Job> ready_queue;
@@ -153,7 +153,7 @@ QList<Job> Scheduler::schedule_nonpreemptive(std::function<bool (Job &, Job &)> 
 
 double Scheduler::average_waiting_time(const QList<Job> &jobs)
 {
-    QHash<quint32, QList<Job>> jobs_map;
+    QHash<int, QList<Job>> jobs_map;
     for(const Job& job: jobs)
         if(jobs_map.contains(job.id()))
             jobs_map[job.id()].append(job);
@@ -161,7 +161,7 @@ double Scheduler::average_waiting_time(const QList<Job> &jobs)
             jobs_map[job.id()] = QList({job});
 
     double waiting_time = 0;
-    qint32 last_end_time = 0;
+    double last_end_time = 0;
     for(const auto& jobs : qAsConst(jobs_map)) {
         waiting_time += jobs[0].startTime() - jobs[0].arrivalTime();
         last_end_time = jobs[0].endTime();

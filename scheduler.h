@@ -17,7 +17,7 @@ public:
     QList<Job> priority_preemptive();
     QList<Job> priority_nonpreemptive();
     QList<Job> fcfs();
-    QList<Job> round_robin(qint32 quantum);
+    QList<Job> round_robin(double quantum);
     double average_waiting_time(const QList<Job>& jobs);
 
 private:
