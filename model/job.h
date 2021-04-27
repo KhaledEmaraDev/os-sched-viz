@@ -1,5 +1,5 @@
-#ifndef JOB_H
-#define JOB_H
+#ifndef JOB_MODEL_H
+#define JOB_MODEL_H
 
 #include <QAbstractTableModel>
 #include <QHash>
@@ -51,27 +51,4 @@ private:
     int m_quantumPriority;
 };
 
-class JobModel : public QAbstractListModel
-{
-    Q_OBJECT
-public:
-    enum JobRoles {
-        LabelRole = Qt::UserRole + 1,
-        StartTimeRole,
-        DurationRole,
-        PriorityRole
-    };
-
-    int rowCount(const QModelIndex & = QModelIndex()) const override;
-    QVariant data(const QModelIndex &index, int role) const override;
-    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
-    Qt::ItemFlags flags(const QModelIndex &index) const override;
-
-    void addJob(const Job &job);
-protected:
-    QHash<int, QByteArray> roleNames() const override;
-private:
-    QList<Job> m_jobs;
-};
-
-#endif // JOB_H
+#endif // JOB_MODEL_H

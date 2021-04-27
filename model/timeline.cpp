@@ -5,12 +5,6 @@
 TimelineModel::TimelineModel(QObject *parent) :
     QAbstractListModel(parent)
 {
-    for (int i = 0; i < 12; i++) {
-        quint32 dur = ((QRandomGenerator::global()->bounded(16) / 5) * 5) + 5;
-        m_data << dur;
-    }
-
-    m_labels = { "A", "B", "A", "C", "D", "A", "E", "F", "H", "I", "J", "K" };
 }
 
 int TimelineModel::rowCount(const QModelIndex &parent) const
@@ -36,7 +30,15 @@ QVariant TimelineModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QVariant TimelineModel::labels() const
+void TimelineModel::addJob(const Job &job)
+{
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
+    m_data << job.duration();
+    m_labels << job.label();
+    endInsertRows();
+}
+
+Q_INVOKABLE QVariant TimelineModel::labels() const
 {
     return QVariant::fromValue(m_labels);
 }

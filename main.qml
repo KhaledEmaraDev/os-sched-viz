@@ -11,6 +11,8 @@ Item {
     width: 900
     height: 700
 
+    signal visualize()
+
     property var jobModel
     property var timelineModel
     property var tableModel
@@ -424,6 +426,9 @@ Item {
         width: 162
         height: 40
         text: qsTr("Visualize")
+        onClicked: {
+            root.visualize()
+        }
     }
 }
 
