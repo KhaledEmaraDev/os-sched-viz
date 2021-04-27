@@ -4,7 +4,7 @@
 #include <QDebug>
 
 #include "model/job.h"
-#include "controller/job.h"
+#include "controller/jobcontroller.h"
 #include "scheduler.h"
 
 void test_algorthim() {

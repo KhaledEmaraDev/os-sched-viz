@@ -1,7 +1,7 @@
 #include <QList>
 #include <QPair>
 
-#include "controller/job.h"
+#include "controller/jobcontroller.h"
 #include "model/job.h"
 #include "scheduler.h"
 
