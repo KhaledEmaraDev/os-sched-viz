@@ -2,8 +2,10 @@
 
 #include <iostream>
 
+#define EPSILON 0.01
+
 TimelineModel::TimelineModel(QObject *parent) :
-    QAbstractListModel(parent), m_min(0), m_max(0), m_currentTime(0)
+    QAbstractListModel(parent), m_max(0)
 {
 }
 
@@ -35,20 +37,19 @@ void TimelineModel::addJobs(const QList<Job> &jobs)
     if (jobs.isEmpty())
         return;
 
-    if (rowCount() == 0)
-        setMin(jobs[0].startTime());
-
     beginInsertRows(QModelIndex(), rowCount(), rowCount() + jobs.size() - 1);
     for (const Job &job: jobs) {
-        if (m_currentTime < job.startTime()) {
-            m_data << job.startTime() - m_currentTime;
+        if ((job.startTime() - max()) > EPSILON) {
+            m_ids << -1;
+            m_data << job.startTime() - max();
             m_labels << "Idle";
         }
+        m_ids << job.id();
         m_data << job.duration();
         m_labels << job.label();
-        m_currentTime = job.endTime();
+//        m_currentTime = job.endTime();
 
-        setMax(m_currentTime);
+        setMax(job.endTime());
     }
     endInsertRows();
 }
@@ -56,6 +57,7 @@ void TimelineModel::addJobs(const QList<Job> &jobs)
 void TimelineModel::clearJobs()
 {
     beginResetModel();
+    m_ids.clear();
     m_data.clear();
     m_labels.clear();
     setMax(0);
@@ -84,7 +86,7 @@ void TimelineModel::setMax(const double max) {
     }
 }
 
-Q_INVOKABLE QVariant TimelineModel::labels() const
+Q_INVOKABLE QVariant TimelineModel::ids() const
 {
-    return QVariant::fromValue(m_labels);
+    return QVariant::fromValue(m_ids);
 }

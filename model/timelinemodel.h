@@ -9,7 +9,6 @@
 class TimelineModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(double min READ min WRITE setMin NOTIFY minChanged)
     Q_PROPERTY(double max READ max WRITE setMax NOTIFY maxChanged)
 public:
     explicit TimelineModel(QObject *parent = nullptr);
@@ -27,16 +26,15 @@ public:
     double max() const;
     void setMax(const double max);
 
-    Q_INVOKABLE QVariant labels() const;
+    Q_INVOKABLE QVariant ids() const;
 signals:
     void minChanged();
     void maxChanged();
 private:
+    QList<int> m_ids;
     QList<quint32> m_data;
     QList<QString> m_labels;
-    double m_min;
     double m_max;
-    double m_currentTime;
 };
 
 #endif // TIMELINE_MODEL_H

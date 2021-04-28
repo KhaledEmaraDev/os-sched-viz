@@ -33,6 +33,10 @@ int Job::id() const
 {
     return m_id;
 }
+void Job::setId(int id)
+{
+    m_id = id;
+}
 
 QString Job::label() const
 {

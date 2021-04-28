@@ -15,6 +15,7 @@ public:
         const double &priority);
 
     int id() const;
+    void setId(int id);
 
     QString label() const;
     void setLabel(const QString &label);

@@ -15,21 +15,6 @@ Item {
     property var timelineModel
     property var jobModel
 
-    Connections {
-        target: timelineModel
-        function onRowsInserted() {
-            const labels = root.timelineModel.labels()
-            let colorMap = {}
-            for (let i = 0; i < ganttSeries.count; i++) {
-                if (colorMap[labels[i]] === undefined) {
-                    colorMap[labels[i]] = ganttSeries.at(i).color
-                } else {
-                    ganttSeries.at(i).color = colorMap[labels[i]];
-                }
-            }
-        }
-    }
-
     GridLayout {
         x: 109
         y: 20
@@ -368,7 +353,7 @@ Item {
             ChartView {
                 id: timelineChart
 
-                width: 720
+                width: timelineModel.max > 24 ? Math.ceil(timelineModel.max) * 25 : parent.width
                 height: parent.height
 
                 antialiasing: true
@@ -379,10 +364,9 @@ Item {
                 ValueAxis {
                     id: timeAxis
                     min: 0
-                    max: Math.ceil(timelineModel.max)
-                    tickType: ValueAxis.TicksDynamic
-                    tickAnchor: 0
-                    tickInterval: 10
+                    max: timelineModel.max
+                    tickType: ValueAxis.TicksFixed
+                    tickCount: (Math.ceil(timelineModel.max) / 2) + 1
                 }
 
                 HorizontalStackedBarSeries {
@@ -397,9 +381,23 @@ Item {
                     HBarModelMapper {
                         model: root.timelineModel
                         firstBarSetRow: 0
-                        lastBarSetRow: 11
+                        lastBarSetRow: 2147483647
                         firstColumn: 0
                         columnCount: 1
+                    }
+
+                    onCountChanged: {
+                        const ids = root.timelineModel.ids()
+                        let colorMap = {};
+                        for (let i = 0; i < ganttSeries.count; i++) {
+                            if (colorMap[ids[i]]) {
+                                console.log(i, ids, "Found")
+                                ganttSeries.at(i).color = colorMap[ids[i]];
+                            } else {
+                                console.log(i, ids, "Not Found")
+                                colorMap[ids[i]] = ganttSeries.at(i).color
+                            }
+                        }
                     }
                 }
             }
