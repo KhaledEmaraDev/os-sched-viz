@@ -21,12 +21,8 @@ function init()
     }
     else if(curr_alg === "SJF")
     {
-        priority = false;
         preemtive_checkBox.visible = true;
-        priority_rectangle.visible = false;
         jobModel.initTable(priority)
-
-
     }
     else
     { // Round Robin

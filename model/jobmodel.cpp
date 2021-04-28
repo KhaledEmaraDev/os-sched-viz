@@ -148,19 +148,29 @@ QHash<int, QByteArray> TableModel::roleNames() const {
 }
 
 void TableModel::addProcess(QVector<QString> process) {
+    QString label = process[PROCESS_NAME];
+    double arrivalTime = process[ARRIVAL_TIME].toDouble();
+    double durtion = process[BURST_TIME].toDouble();
+    double priority = process[PRIORITY].toDouble();
+
+    QString schedule_alg = process[ALGORITHM];
+    double timeSlice = process[TIME_SLICE].toDouble();
+    bool isPreemtive = process[PREEMTION].toInt();
+
+    if(arrivalTime < 0 || durtion <= 0)
+        return;
+    if(schedule_alg == "Round Robin" && timeSlice <= 0)
+        return;
+
+    jobs.append(Job(label, arrivalTime, durtion, priority));
+
+    s_algorithm.schedule_alg = schedule_alg;
+    s_algorithm.timeSlice = timeSlice;
+    s_algorithm.isPreemtive = isPreemtive;
+
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     table.append(process);
     endInsertRows();
-
-    Job j1;
-    j1.setLabel(process[PROCESS_NAME]);
-    j1.setArrivalTime( process[ARRIVAL_TIME].toInt());
-    j1.setDuration(process[BURST_TIME].toInt());
-    j1.setPriority(process[PRIORITY].toInt());
-    jobs.append(j1);
-    s_algorithm.schedule_alg = process[ALGORITHM];
-    s_algorithm.timeSlice = process[TIME_SLICE].toInt();
-    s_algorithm.isPreemtive = process[PREEMTION].toInt();
 
     //    qDebug("%s", qUtf8Printable(j1.label()));
     //    qDebug ("%i", j1.duration());
