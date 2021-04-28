@@ -193,9 +193,9 @@ void TableModel::addProcess(QVector<QString> process) {
 
 void TableModel::changeAlgorithm(QVector<QString> algorithm) {
 
-    QString schedule_alg = algorithm[ALGORITHM];
-    double timeSlice = algorithm[TIME_SLICE].toDouble();
-    bool isPreemtive = algorithm[PREEMTION].toInt();
+    QString schedule_alg = algorithm[0];
+    double timeSlice = algorithm[1].toDouble();
+    bool isPreemtive = algorithm[2].toInt();
 
     if(schedule_alg == "Round Robin" && timeSlice <= 0)
         return;

@@ -100,15 +100,19 @@ function addProcess()
 }
 
 function changeAlgorithm() {
-    if (time_quantum_textEdit.text.length && !isNaN(time_quantum_textEdit.text)) {
-        let list_str = [];
-        list_str.push(time_quantum_textEdit.text);
-        list_str.push((preemtive_checkBox.checked)? 1 : 0);
-        list_str.push( algorithm_comboBox.valueAt(algorithm_comboBox.currentIndex));
-        jobModel.changeAlgorithm(list_str);
-    } else {
+    var algorithm = algorithm_comboBox.valueAt(algorithm_comboBox.currentIndex);
+    if (algorithm === "Round Robin" &&
+            !(time_quantum_textEdit.text.length &&
+            !isNaN(time_quantum_textEdit.text))) {
         time_quantum_rectangle.border.color = "red";
+        return;
     }
+    time_quantum_rectangle.border.color = "black";
+    let list_str = [];
+    list_str.push(algorithm);
+    list_str.push(time_quantum_textEdit.text);
+    list_str.push((preemtive_checkBox.checked)? 1 : 0);
+    jobModel.changeAlgorithm(list_str);
 }
 
 function removeProcess()
