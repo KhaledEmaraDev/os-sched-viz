@@ -48,7 +48,11 @@ int main(int argc, char *argv[])
                               });
     view.setSource(QUrl(QStringLiteral("qrc:main.qml")));
 
-    controller.timelineModel()->addJob({"A", 0, 5, 0});
+    Job j1("A", 1, 7, 0);
+    Job j2("B", 2, 4, 0);
+    j1.setStartTime(j1.arrivalTime());
+    j2.setStartTime(j2.arrivalTime());
+    controller.timelineModel()->addJobs({j1, j2});
 
     QObject *item = view.rootObject();
     QObject::connect(item, SIGNAL(visualize()),

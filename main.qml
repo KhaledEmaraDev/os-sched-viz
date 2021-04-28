@@ -17,8 +17,16 @@ Item {
 
     Connections {
         target: timelineModel
-        function onModelReset() {
-            console.log("Model Reset");
+        function onRowsInserted() {
+            const labels = root.timelineModel.labels()
+            let colorMap = {}
+            for (let i = 0; i < ganttSeries.count; i++) {
+                if (colorMap[labels[i]] === undefined) {
+                    colorMap[labels[i]] = ganttSeries.at(i).color
+                } else {
+                    ganttSeries.at(i).color = colorMap[labels[i]];
+                }
+            }
         }
     }
 
@@ -92,9 +100,9 @@ Item {
         height: 35
         text: qsTr("Preemtive")
         font.bold: true
-//        onCheckedChanged:{
-//            preemtive_checkBox.text = (preemtive_checkBox.checked)? "Preemtive":"Non-preemtive";
-//        }
+        //        onCheckedChanged:{
+        //            preemtive_checkBox.text = (preemtive_checkBox.checked)? "Preemtive":"Non-preemtive";
+        //        }
     }
 
     Label {
@@ -360,7 +368,7 @@ Item {
             ChartView {
                 id: timelineChart
 
-                width: 1080
+                width: 720
                 height: parent.height
 
                 antialiasing: true
@@ -371,9 +379,10 @@ Item {
                 ValueAxis {
                     id: timeAxis
                     min: 0
-                    max: timelineModel.sum
+                    max: Math.ceil(timelineModel.max)
                     tickType: ValueAxis.TicksDynamic
-                    tickInterval: 5
+                    tickAnchor: 0
+                    tickInterval: 10
                 }
 
                 HorizontalStackedBarSeries {
@@ -391,18 +400,6 @@ Item {
                         lastBarSetRow: 11
                         firstColumn: 0
                         columnCount: 1
-
-                        Component.onCompleted: {
-                            const labels = root.timelineModel.labels()
-                            let colorMap = {}
-                            for (let i = 0; i < ganttSeries.count; i++) {
-                                if (colorMap[labels[i]] === undefined) {
-                                    colorMap[labels[i]] = ganttSeries.at(i).color
-                                } else {
-                                    ganttSeries.at(i).color = colorMap[labels[i]];
-                                }
-                            }
-                        }
                     }
                 }
             }

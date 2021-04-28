@@ -3,7 +3,7 @@
 #include <iostream>
 
 TimelineModel::TimelineModel(QObject *parent) :
-    QAbstractListModel(parent), m_sum(0)
+    QAbstractListModel(parent), m_min(0), m_max(0), m_currentTime(0)
 {
 }
 
@@ -30,12 +30,26 @@ QVariant TimelineModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void TimelineModel::addJob(const Job &job)
+void TimelineModel::addJobs(const QList<Job> &jobs)
 {
-    beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    m_data << job.duration();
-    m_labels << job.label();
-    setSum(sum() + job.duration());
+    if (jobs.isEmpty())
+        return;
+
+    if (rowCount() == 0)
+        setMin(jobs[0].startTime());
+
+    beginInsertRows(QModelIndex(), rowCount(), rowCount() + jobs.size() - 1);
+    for (const Job &job: jobs) {
+        if (m_currentTime < job.startTime()) {
+            m_data << job.startTime() - m_currentTime;
+            m_labels << "Idle";
+        }
+        m_data << job.duration();
+        m_labels << job.label();
+        m_currentTime = job.endTime();
+
+        setMax(m_currentTime);
+    }
     endInsertRows();
 }
 
@@ -44,18 +58,29 @@ void TimelineModel::clearJobs()
     beginResetModel();
     m_data.clear();
     m_labels.clear();
-    setSum(0);
+    setMax(0);
     endResetModel();
 }
 
-int TimelineModel::sum() const {
-    return m_sum;
+double TimelineModel::min() const {
+    return m_max;
 }
 
-void TimelineModel::setSum(const int sum) {
-    if (m_sum != sum) {
-        m_sum = sum;
-        emit sumChanged();
+void TimelineModel::setMin(const double min) {
+    if (m_max != min) {
+        m_max = min;
+        emit maxChanged();
+    }
+}
+
+double TimelineModel::max() const {
+    return m_max;
+}
+
+void TimelineModel::setMax(const double max) {
+    if (m_max != max) {
+        m_max = max;
+        emit maxChanged();
     }
 }
 

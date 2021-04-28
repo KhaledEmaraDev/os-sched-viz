@@ -2,13 +2,15 @@
 #define TIMELINE_MODEL_H
 
 #include <QAbstractListModel>
+#include <QList>
 
 #include "model/jobmodel.h"
 
 class TimelineModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(int sum READ sum WRITE setSum NOTIFY sumChanged)
+    Q_PROPERTY(double min READ min WRITE setMin NOTIFY minChanged)
+    Q_PROPERTY(double max READ max WRITE setMax NOTIFY maxChanged)
 public:
     explicit TimelineModel(QObject *parent = nullptr);
 
@@ -16,19 +18,25 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-    void addJob(const Job &job);
+    void addJobs(const QList<Job> &jobs);
     void clearJobs(void);
 
-    int sum() const;
-    void setSum(const int sum);
+    double min() const;
+    void setMin(const double min);
+
+    double max() const;
+    void setMax(const double max);
 
     Q_INVOKABLE QVariant labels() const;
 signals:
-    void sumChanged();
+    void minChanged();
+    void maxChanged();
 private:
     QList<quint32> m_data;
     QList<QString> m_labels;
-    int m_sum;
+    double m_min;
+    double m_max;
+    double m_currentTime;
 };
 
 #endif // TIMELINE_MODEL_H

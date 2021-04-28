@@ -53,7 +53,5 @@ void JobController::visualize()
     }
 
     m_timeline_model.clearJobs();
-    for (Job &job: output) {
-        m_timeline_model.addJob(job);
-    }
+    m_timeline_model.addJobs(output);
 }
