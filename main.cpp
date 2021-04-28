@@ -18,7 +18,7 @@ void test_algorthim() {
     QList<Job> input = {j1, j2, j3, j4};
     sc.add_job(j1).add_job(j2).add_job(j3).add_job(j4);
 
-    QList<Job> output = sc.sjf_nonpreemptive();
+    QList<Job> output = sc.fcfs();
 
     std::cout << "Input Jobs\n";
     for(Job& j : input)

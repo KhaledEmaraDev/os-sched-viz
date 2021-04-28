@@ -33,7 +33,19 @@ QList<Job> Scheduler::priority_nonpreemptive()
 
 QList<Job> Scheduler::fcfs()
 {
+    std::sort(wait_queue.begin(), wait_queue.end(), comp_arrival_func);
 
+    QList<Job> output_list = wait_queue;
+    output_list.begin() -> setStartTime(output_list.begin() -> arrivalTime());
+
+    int n = output_list.size();
+    for(int i = 1; i < n; i++)
+    {
+        output_list[i].setStartTime( std::max(output_list[i].arrivalTime(),
+                                              output_list[i-1].endTime()) );
+    }
+
+    return output_list;
 }
 
 QList<Job> Scheduler::round_robin(double quantum)
