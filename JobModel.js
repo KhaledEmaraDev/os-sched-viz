@@ -21,12 +21,8 @@ function init()
     }
     else if(curr_alg === "SJF")
     {
-        priority = true;
         preemtive_checkBox.visible = true;
-        priority_rectangle.visible = true;
         jobModel.initTable(priority)
-
-
     }
     else
     { // Round Robin
@@ -50,30 +46,25 @@ function cleanInputFields()
 
 function validateInput()
 {
-    var status;
     var curr_alg = algorithm_comboBox.valueAt(algorithm_comboBox.currentIndex);
 
-    if( curr_alg === "FCFS")
-    {
-        status = !(process_name_textEdit.text.length === 0) &&
-                !(arrival_time_textEdit.text.length === 0) &&
-                !(burst_time_textEdit.text.length === 0);
-    }
-    else if(curr_alg === "Priority" || curr_alg === "SJF")
-    {
-        status = !(process_name_textEdit.text.length === 0) &&
-                !(arrival_time_textEdit.text.length === 0) &&
-                !(burst_time_textEdit.text.length === 0)&&
-                !(priority_textEdit.text.length === 0);
-    }
-    else
-    {
-        status = !(process_name_textEdit.text.length === 0) &&
-                !(arrival_time_textEdit.text.length === 0) &&
-                !(burst_time_textEdit.text.length === 0)&&
-                !(time_quantum_textEdit.text.length === 0);
-    }
+    var status = process_name_textEdit.text.length &&
+                 arrival_time_textEdit.text.length  &&
+                 burst_time_textEdit.text.length;
 
+    status &= !isNaN(arrival_time_textEdit.text) &&
+              !isNaN(burst_time_textEdit.text);
+
+    if(curr_alg === "Priority")
+    {
+        status &= priority_textEdit.text.length;
+        status &= !isNaN(priority_textEdit.text);
+    }
+    else if (curr_alg === "Round Robin")
+    {
+        status &= time_quantum_textEdit.text.length;
+        status &= !isNaN(time_quantum_textEdit.text);
+    }
     return status;
 }
 
@@ -96,11 +87,15 @@ function addProcess()
     }
     else
     {
-        process_name_rectangle.border.color = (process_name_textEdit.text.length === 0)? "red":"black";
-        arrival_time_rectangle.border.color = (arrival_time_textEdit.text.length === 0)? "red":"black";
-        burst_time_rectangle.border.color = (burst_time_textEdit.text.length === 0)? "red":"black";
-        priority_rectangle.border.color = (priority_textEdit.text.length === 0)? "red":"black";
-        time_quantum_rectangle.border.color = (time_quantum_textEdit.text.length === 0)? "red":"black";
+        process_name_rectangle.border.color = !process_name_textEdit.text.length ? "red" : "black";
+        arrival_time_rectangle.border.color = !arrival_time_textEdit.text.length ||
+                                              isNaN(arrival_time_textEdit.text) ? "red" : "black";
+        burst_time_rectangle.border.color = !burst_time_textEdit.text.length ||
+                                            isNaN(burst_time_textEdit.text) ? "red" : "black";
+        priority_rectangle.border.color = !priority_textEdit.text.length ||
+                                           isNaN(priority_textEdit.text) ? "red" : "black";
+        time_quantum_rectangle.border.color = !time_quantum_textEdit.text.length ||
+                                               isNaN(time_quantum_textEdit.text) ? "red" : "black";
     }
 }
 

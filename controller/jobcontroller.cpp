@@ -24,6 +24,10 @@ void JobController::visualize()
 {
     Scheduler sc;
     QPair<algorithmInfo, QList<Job>> input = m_job_model.getJobs();
+    // temp valdation
+    if(input.second.isEmpty())
+        return;
+
     QList<Job> output;
 
     for (Job &job: input.second) {
