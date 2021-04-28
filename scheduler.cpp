@@ -35,22 +35,83 @@ QList<Job> Scheduler::fcfs()
 {
     std::sort(wait_queue.begin(), wait_queue.end(), comp_arrival_func);
 
-    QList<Job> output_list = wait_queue;
-    output_list.begin() -> setStartTime(output_list.begin() -> arrivalTime());
-
-    int n = output_list.size();
-    for(int i = 1; i < n; i++)
+    wait_queue[0].setStartTime(wait_queue[0].arrivalTime());
+    for(int i = 1; i < wait_queue.size(); i++)
     {
-        output_list[i].setStartTime( std::max(output_list[i].arrivalTime(),
-                                              output_list[i-1].endTime()) );
+        wait_queue[i].setStartTime(std::max(wait_queue[i].arrivalTime(),
+                                            wait_queue[i-1].endTime()));
     }
-
-    return output_list;
+    return wait_queue;
 }
 
 QList<Job> Scheduler::round_robin(double quantum)
 {
+    std::sort(wait_queue.begin(), wait_queue.end(), comp_arrival_func);
+    double last_duration = 0;
+    double last_start_time = 0;
+    double current_time = 0;
+    QList<Job> output_list;
+    QList<Job> ready_queue;
+    auto wait_it = wait_queue.begin();
+    Job current_job;
+    Job last_job;
+    bool new_job_flag = true;
 
+    while(wait_it != wait_queue.end() ||
+          ready_queue.size()) {
+
+        if(output_list.size()) {
+            last_job = output_list.back();
+            if(last_job.endTime() > current_time) {
+                last_job.setDuration(last_job.endTime() - current_time);
+                ready_queue.append(last_job);
+                std::push_heap(ready_queue.begin(), ready_queue.end(), comp_quantum_func);
+                last_duration = output_list.back().duration() - last_job.duration();
+                output_list.back().setDuration(last_duration);
+            }
+        }
+
+        while (wait_it != wait_queue.end() &&
+               wait_it->arrivalTime() <= current_time) {
+            ready_queue.append(*wait_it);
+            std::push_heap(ready_queue.begin(), ready_queue.end(), comp_quantum_func);
+            wait_it++;
+        }
+
+        if(ready_queue.size()) {
+            new_job_flag = false;
+            std::pop_heap(ready_queue.begin(), ready_queue.end(), comp_quantum_func);
+            current_job = ready_queue.back();
+            ready_queue.pop_back();
+        }
+        else {
+            new_job_flag = true;
+            current_job = *wait_it;
+            wait_it++;
+        }
+        current_job.increaseQuantumPriority();
+
+        if (output_list.size() &&
+                current_job.id() == output_list.back().id()) {
+            output_list.back().setDuration(
+                        output_list.back().duration() + current_job.duration());
+            last_start_time = output_list.back().startTime();
+            last_duration = output_list.back().duration();
+        }
+        else {
+            last_start_time =std::max(last_start_time + last_duration,
+                                      current_job.arrivalTime());
+            last_duration = current_job.duration();
+            current_job.setStartTime(last_start_time);
+            output_list.append(current_job);
+        }
+
+        current_time = std::min(new_job_flag ?
+                                    last_start_time + quantum :
+                                    current_time + quantum,
+                                last_start_time + last_duration);
+    }
+    return output_list;
 }
 
 QList<Job> Scheduler::schedule_preemptive(std::function<bool (Job &, Job &)> comp_func)
