@@ -48,21 +48,21 @@ function validateInput()
 {
     var curr_alg = algorithm_comboBox.valueAt(algorithm_comboBox.currentIndex);
 
-    var status = process_name_textEdit.text.length &&
+    var status = (process_name_textEdit.text.length &&
                  arrival_time_textEdit.text.length  &&
-                 burst_time_textEdit.text.length;
+                 burst_time_textEdit.text.length) ? 1 : 0;
 
     status &= !isNaN(arrival_time_textEdit.text) &&
               !isNaN(burst_time_textEdit.text);
 
     if(curr_alg === "Priority")
     {
-        status &= priority_textEdit.text.length;
+        status &= priority_textEdit.text.length ? 1 : 0;
         status &= !isNaN(priority_textEdit.text);
     }
     else if (curr_alg === "Round Robin")
     {
-        status &= time_quantum_textEdit.text.length;
+        status &= time_quantum_textEdit.text.length ? 1 : 0;
         status &= !isNaN(time_quantum_textEdit.text);
     }
     return status;

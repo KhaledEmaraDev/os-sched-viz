@@ -1,6 +1,7 @@
 #include "model/jobmodel.h"
 
 #include <iostream>
+#include <QDebug>
 
 int Job::m_globalId = 0;
 
@@ -156,6 +157,10 @@ void TableModel::addProcess(QVector<QString> process) {
     QString schedule_alg = process[ALGORITHM];
     double timeSlice = process[TIME_SLICE].toDouble();
     bool isPreemtive = process[PREEMTION].toInt();
+
+//    qDebug() << label << "\n" << arrivalTime << "\n" << durtion << "\n"
+//                << priority << "\n" << schedule_alg << "\n" << timeSlice
+//                << "\n" << isPreemtive << "\n\n\n";
 
     if(arrivalTime < 0 || durtion <= 0)
         return;
