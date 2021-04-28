@@ -84,11 +84,11 @@ Item {
         y: 23
         width: 145
         height: 35
-        text: qsTr("Non-preemtive")
+        text: qsTr("Preemtive")
         font.bold: true
-        onCheckedChanged:{
-            preemtive_checkBox.text = (preemtive_checkBox.checked)? "Preemtive":"Non-preemtive";
-        }
+//        onCheckedChanged:{
+//            preemtive_checkBox.text = (preemtive_checkBox.checked)? "Preemtive":"Non-preemtive";
+//        }
     }
 
     ColumnLayout {
