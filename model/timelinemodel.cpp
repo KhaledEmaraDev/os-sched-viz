@@ -1,6 +1,4 @@
-#include "model/timeline.h"
-
-#include <QRandomGenerator>
+#include "model/timelinemodel.h"
 
 TimelineModel::TimelineModel(QObject *parent) :
     QAbstractListModel(parent)

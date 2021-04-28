@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
 
-import "TableModel.js" as TM_func
+import "JobModel.js" as TM_func
 
 Item {
     id: root
@@ -13,9 +13,8 @@ Item {
 
     signal visualize()
 
-    property var jobModel
     property var timelineModel
-    property var tableModel
+    property var jobModel
 
     GridLayout {
         x: 109
@@ -318,7 +317,7 @@ Item {
             clip: true
             ScrollIndicator.horizontal: ScrollIndicator { }
             ScrollIndicator.vertical: ScrollIndicator { }
-            model: root.tableModel
+            model: root.jobModel
 
             delegate: Rectangle {
                 implicitWidth: 100

@@ -1,8 +1,8 @@
+#include "controller/jobcontroller.h"
+
 #include <QList>
 #include <QPair>
 
-#include "controller/jobcontroller.h"
-#include "model/job.h"
 #include "scheduler.h"
 
 JobController::JobController(QObject *parent)
@@ -15,15 +15,15 @@ TimelineModel *JobController::timelineModel()
     return &m_timeline_model;
 }
 
-TableModel *JobController::tableModel()
+TableModel *JobController::jobModel()
 {
-    return &m_table_model;
+    return &m_job_model;
 }
 
 void JobController::visualize()
 {
     Scheduler sc;
-    QPair<algorithmInfo, QList<Job>> input = m_table_model.getJobs();
+    QPair<algorithmInfo, QList<Job>> input = m_job_model.getJobs();
     QList<Job> output;
 
     for (Job &job: input.second) {

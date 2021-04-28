@@ -3,7 +3,7 @@
 
 #include <QAbstractListModel>
 
-#include "model/job.h"
+#include "model/jobmodel.h"
 
 class TimelineModel : public QAbstractListModel
 {

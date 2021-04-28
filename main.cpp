@@ -3,8 +3,8 @@
 #include <QQuickItem>
 #include <QDebug>
 
-#include "model/job.h"
 #include "controller/jobcontroller.h"
+#include "model/jobmodel.h"
 #include "scheduler.h"
 
 void test_algorthim() {
@@ -35,15 +35,16 @@ int main(int argc, char *argv[])
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
-    test_algorthim();
+    //    test_algorthim();
 
     QApplication app(argc, argv);
-    JobController controller;
     QQuickView view;
+    JobController controller;
 
     view.setResizeMode(QQuickView::SizeRootObjectToView);
-    view.setInitialProperties({{"timelineModel", QVariant::fromValue(controller.timelineModel())},
-                               {"tableModel", QVariant::fromValue(controller.tableModel())}
+    view.setInitialProperties({
+                                  {"timelineModel", QVariant::fromValue(controller.timelineModel())},
+                                  {"jobModel", QVariant::fromValue(controller.jobModel())}
                               });
     view.setSource(QUrl(QStringLiteral("qrc:main.qml")));
 

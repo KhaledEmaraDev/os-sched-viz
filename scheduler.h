@@ -1,10 +1,10 @@
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
 
-#include "model/job.h"
-
 #include <algorithm>
 #include <iostream>
+
+#include "model/jobmodel.h"
 
 class Scheduler
 {

@@ -2,35 +2,36 @@ function init()
 {
     var priority = false;
     var curr_alg = algorithm_comboBox.valueAt(algorithm_comboBox.currentIndex);
-    algorithm_comboBox.displayText = curr_alg;
 
+    algorithm_comboBox.displayText = curr_alg;
     preemtive_checkBox.visible = false;
     priority_rectangle.visible = false;
     time_quantum_rectangle.visible = false;
 
     if( curr_alg === "FCFS")
-        tableModel.initTable(priority)
+    {
+        jobModel.initTable(priority)
+    }
     else if(curr_alg === "Priority")
     {
         priority = true;
         preemtive_checkBox.visible = true;
         priority_rectangle.visible = true;
-        tableModel.initTable(priority)
+        jobModel.initTable(priority)
     }
     else if(curr_alg === "SJF")
     {
         priority = true;
         preemtive_checkBox.visible = true;
         priority_rectangle.visible = true;
-        tableModel.initTable(priority)
+        jobModel.initTable(priority)
 
 
     }
     else
-    {
-        // Round Robin
+    { // Round Robin
         time_quantum_rectangle.visible = true;
-        tableModel.initTable(priority);
+        jobModel.initTable(priority);
     }
 }
 
@@ -46,6 +47,7 @@ function cleanInputFields()
     priority_rectangle.border.color = "black";
     time_quantum_rectangle.border.color = "black";
 }
+
 function validateInput()
 {
     var status;
@@ -54,23 +56,24 @@ function validateInput()
     if( curr_alg === "FCFS")
     {
         status = !(process_name_textEdit.text.length === 0) &&
-                 !(arrival_time_textEdit.text.length === 0) &&
-                 !(burst_time_textEdit.text.length === 0);
+                !(arrival_time_textEdit.text.length === 0) &&
+                !(burst_time_textEdit.text.length === 0);
     }
     else if(curr_alg === "Priority" || curr_alg === "SJF")
     {
         status = !(process_name_textEdit.text.length === 0) &&
-                 !(arrival_time_textEdit.text.length === 0) &&
-                 !(burst_time_textEdit.text.length === 0)&&
-                 !(priority_textEdit.text.length === 0);
+                !(arrival_time_textEdit.text.length === 0) &&
+                !(burst_time_textEdit.text.length === 0)&&
+                !(priority_textEdit.text.length === 0);
     }
     else
     {
         status = !(process_name_textEdit.text.length === 0) &&
-                 !(arrival_time_textEdit.text.length === 0) &&
-                 !(burst_time_textEdit.text.length === 0)&&
-                 !(time_quantum_textEdit.text.length === 0);
+                !(arrival_time_textEdit.text.length === 0) &&
+                !(burst_time_textEdit.text.length === 0)&&
+                !(time_quantum_textEdit.text.length === 0);
     }
+
     return status;
 }
 
@@ -88,7 +91,7 @@ function addProcess()
         list_str.push(time_quantum_textEdit.text);
         list_str.push((preemtive_checkBox.checked)? 1:0);
         list_str.push( algorithm_comboBox.valueAt(algorithm_comboBox.currentIndex));
-        tableModel.addProcess(list_str);
+        jobModel.addProcess(list_str);
         cleanInputFields();
     }
     else
@@ -103,11 +106,11 @@ function addProcess()
 
 function removeProcess()
 {
-    tableModel.removeProcess();
+    jobModel.removeProcess();
 }
 
 function clearTable()
 {
-    tableModel.clearTable();
+    jobModel.clearTable();
     cleanInputFields();
 }

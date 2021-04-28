@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>TableModel.js</file>
+        <file>JobModel.js</file>
     </qresource>
 </RCC>
