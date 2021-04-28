@@ -92,6 +92,8 @@ public:
 
     Q_INVOKABLE void addProcess(QVector<QString> process);
 
+    Q_INVOKABLE void changeAlgorithm(QVector<QString> algorithm);
+
     Q_INVOKABLE void removeProcess();
 
     Q_INVOKABLE void clearTable();

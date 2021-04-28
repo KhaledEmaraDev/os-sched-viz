@@ -191,6 +191,20 @@ void TableModel::addProcess(QVector<QString> process) {
     //    qDebug ("%i", jobs.size());
 }
 
+void TableModel::changeAlgorithm(QVector<QString> algorithm) {
+
+    QString schedule_alg = algorithm[ALGORITHM];
+    double timeSlice = algorithm[TIME_SLICE].toDouble();
+    bool isPreemtive = algorithm[PREEMTION].toInt();
+
+    if(schedule_alg == "Round Robin" && timeSlice <= 0)
+        return;
+
+    s_algorithm.schedule_alg = schedule_alg;
+    s_algorithm.timeSlice = timeSlice;
+    s_algorithm.isPreemtive = isPreemtive;
+}
+
 void TableModel::removeProcess() {
     if(jobs.size() > 0)
     {

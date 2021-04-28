@@ -85,9 +85,9 @@ Item {
         height: 35
         text: qsTr("Preemtive")
         font.bold: true
-        //        onCheckedChanged:{
-        //            preemtive_checkBox.text = (preemtive_checkBox.checked)? "Preemtive":"Non-preemtive";
-        //        }
+        onCheckedChanged:{
+            TM_func.changeAlgorithm()
+        }
     }
 
     Label {
@@ -249,6 +249,9 @@ Item {
                 font.pixelSize: 12
                 horizontalAlignment: Text.AlignHCenter
                 anchors.centerIn: parent
+                onTextChanged: {
+                    TM_func.changeAlgorithm()
+                }
             }
 
             Label {

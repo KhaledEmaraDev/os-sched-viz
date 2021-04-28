@@ -99,6 +99,18 @@ function addProcess()
     }
 }
 
+function changeAlgorithm() {
+    if (time_quantum_textEdit.text.length && !isNaN(time_quantum_textEdit.text)) {
+        let list_str = [];
+        list_str.push(time_quantum_textEdit.text);
+        list_str.push((preemtive_checkBox.checked)? 1 : 0);
+        list_str.push( algorithm_comboBox.valueAt(algorithm_comboBox.currentIndex));
+        jobModel.changeAlgorithm(list_str);
+    } else {
+        time_quantum_rectangle.border.color = "red";
+    }
+}
+
 function removeProcess()
 {
     jobModel.removeProcess();
