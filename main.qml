@@ -281,7 +281,7 @@ Item {
             id: avr_waiting_label
             x: 51
             y: 10
-            text: qsTr("0")
+            text: root.timelineModel.waitingTime
         }
     }
 
@@ -391,10 +391,8 @@ Item {
                         let colorMap = {};
                         for (let i = 0; i < ganttSeries.count; i++) {
                             if (colorMap[ids[i]]) {
-                                console.log(i, ids, "Found")
                                 ganttSeries.at(i).color = colorMap[ids[i]];
                             } else {
-                                console.log(i, ids, "Not Found")
                                 colorMap[ids[i]] = ganttSeries.at(i).color
                             }
                         }

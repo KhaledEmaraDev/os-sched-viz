@@ -10,6 +10,7 @@ class TimelineModel : public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(double max READ max WRITE setMax NOTIFY maxChanged)
+    Q_PROPERTY(double waitingTime READ waitingTime WRITE setWaitingTime NOTIFY waitingTimeChanged)
 public:
     explicit TimelineModel(QObject *parent = nullptr);
 
@@ -20,21 +21,22 @@ public:
     void addJobs(const QList<Job> &jobs);
     void clearJobs(void);
 
-    double min() const;
-    void setMin(const double min);
-
     double max() const;
     void setMax(const double max);
 
+    double waitingTime() const;
+    void setWaitingTime(const double waitingTime);
+
     Q_INVOKABLE QVariant ids() const;
 signals:
-    void minChanged();
     void maxChanged();
+    void waitingTimeChanged();
 private:
     QList<int> m_ids;
     QList<quint32> m_data;
     QList<QString> m_labels;
     double m_max;
+    double m_waitingTime;
 };
 
 #endif // TIMELINE_MODEL_H

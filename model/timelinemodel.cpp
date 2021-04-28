@@ -5,7 +5,7 @@
 #define EPSILON 0.01
 
 TimelineModel::TimelineModel(QObject *parent) :
-    QAbstractListModel(parent), m_max(0)
+    QAbstractListModel(parent), m_max(0), m_waitingTime(0)
 {
 }
 
@@ -64,17 +64,6 @@ void TimelineModel::clearJobs()
     endResetModel();
 }
 
-double TimelineModel::min() const {
-    return m_max;
-}
-
-void TimelineModel::setMin(const double min) {
-    if (m_max != min) {
-        m_max = min;
-        emit maxChanged();
-    }
-}
-
 double TimelineModel::max() const {
     return m_max;
 }
@@ -83,6 +72,17 @@ void TimelineModel::setMax(const double max) {
     if (m_max != max) {
         m_max = max;
         emit maxChanged();
+    }
+}
+
+double TimelineModel::waitingTime() const {
+    return m_waitingTime;
+}
+
+void TimelineModel::setWaitingTime(const double waitingTime) {
+    if (m_waitingTime != waitingTime) {
+        m_waitingTime = waitingTime;
+        emit waitingTimeChanged();
     }
 }
 

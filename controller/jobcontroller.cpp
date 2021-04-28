@@ -54,4 +54,5 @@ void JobController::visualize()
 
     m_timeline_model.clearJobs();
     m_timeline_model.addJobs(output);
+    m_timeline_model.setWaitingTime(sc.average_waiting_time(output));
 }
