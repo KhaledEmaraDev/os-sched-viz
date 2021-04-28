@@ -1,8 +1,7 @@
-import QtCharts 2.3
-import QtQuick 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Window 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtCharts 2.15
+import QtQuick.Layouts 1.15
+import QtQuick.Controls 2.15
 
 import "JobModel.js" as TM_func
 
@@ -15,6 +14,13 @@ Item {
 
     property var timelineModel
     property var jobModel
+
+    Connections {
+        target: timelineModel
+        function onModelReset() {
+            console.log("Model Reset");
+        }
+    }
 
     GridLayout {
         x: 109
@@ -89,12 +95,6 @@ Item {
         onCheckedChanged:{
             preemtive_checkBox.text = (preemtive_checkBox.checked)? "Preemtive":"Non-preemtive";
         }
-    }
-
-    ColumnLayout {
-    }
-
-    GridLayout {
     }
 
     Label {
@@ -346,21 +346,16 @@ Item {
         border.width: 4
 
         Flickable {
-            id: charFlickabe
+            id: chartFlickabe
             x: 8
             y: 8
-            width: 700
-            height: root.height / 2
-
-            Layout.row: 1
-            Layout.column: 1
-            Layout.fillWidth: true
-            Layout.margins: 8
+            width: parent.width - 16
+            height: parent.height - 16
 
             clip: true
 
             contentWidth: timelineChart.width
-            contentHeight: timelineChart.height
+            contentHeight: height
 
             ChartView {
                 id: timelineChart
@@ -375,6 +370,8 @@ Item {
 
                 ValueAxis {
                     id: timeAxis
+                    min: 0
+                    max: timelineModel.sum
                     tickType: ValueAxis.TicksDynamic
                     tickInterval: 5
                 }
@@ -430,9 +427,3 @@ Item {
         }
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;formeditorZoom:1.3300000429153442}
-}
-##^##*/

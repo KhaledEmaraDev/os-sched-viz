@@ -1,7 +1,9 @@
 #include "model/timelinemodel.h"
 
+#include <iostream>
+
 TimelineModel::TimelineModel(QObject *parent) :
-    QAbstractListModel(parent)
+    QAbstractListModel(parent), m_sum(0)
 {
 }
 
@@ -33,7 +35,28 @@ void TimelineModel::addJob(const Job &job)
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     m_data << job.duration();
     m_labels << job.label();
+    setSum(sum() + job.duration());
     endInsertRows();
+}
+
+void TimelineModel::clearJobs()
+{
+    beginResetModel();
+    m_data.clear();
+    m_labels.clear();
+    setSum(0);
+    endResetModel();
+}
+
+int TimelineModel::sum() const {
+    return m_sum;
+}
+
+void TimelineModel::setSum(const int sum) {
+    if (m_sum != sum) {
+        m_sum = sum;
+        emit sumChanged();
+    }
 }
 
 Q_INVOKABLE QVariant TimelineModel::labels() const

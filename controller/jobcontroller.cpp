@@ -48,6 +48,7 @@ void JobController::visualize()
         output = sc.round_robin(input.first.timeSlice);
     }
 
+    m_timeline_model.clearJobs();
     for (Job &job: output) {
         m_timeline_model.addJob(job);
     }
