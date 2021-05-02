@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="main.qml">../ui/main.qml</file>
+        <file alias="jobmodel.js">../ui/jobmodel.js</file>
+    </qresource>
+</RCC>

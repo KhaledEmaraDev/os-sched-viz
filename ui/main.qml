@@ -3,7 +3,7 @@ import QtCharts 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
 
-import "JobModel.js" as TM_func
+import "jobmodel.js" as TM_func
 
 Item {
     id: root

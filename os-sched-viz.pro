@@ -8,18 +8,19 @@ CONFIG += c++17
 
 HEADERS += \
     controller/jobcontroller.h \
+    controller/scheduler.h \
     model/jobmodel.h \
     model/timelinemodel.h \
-    scheduler.h \
 
 SOURCES += \
     controller/jobcontroller.cpp \
-    main.cpp \
+    controller/scheduler.cpp \
     model/jobmodel.cpp \
     model/timelinemodel.cpp \
-    scheduler.cpp \
+    src/main.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += \
+    res/qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
