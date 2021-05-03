@@ -9,6 +9,7 @@
 
 #include "model/job.h"
 
+
 typedef struct{
     QString schedule_alg;
     qint32 timeSlice;
@@ -54,9 +55,6 @@ public:
     Q_INVOKABLE void clearTable();
 
     QPair<algorithmInfo, QList<Job>> getJobs();
-
-
-
 
 private:
     QVector<QVector<QString>> table;

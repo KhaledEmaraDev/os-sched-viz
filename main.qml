@@ -47,7 +47,7 @@ Item {
         Button {
             id: remove_process_button
             height: 40
-            text: qsTr("Remove Process")
+            text: qsTr("Remove Last Process")
             focusPolicy: Qt.ClickFocus
             onClicked: TM_func.removeProcess()
         }
@@ -79,7 +79,7 @@ Item {
 
     CheckBox {
         id: preemtive_checkBox
-        x: 697
+        x: 747
         y: 23
         width: 145
         height: 35
@@ -87,7 +87,6 @@ Item {
         font.bold: true
         onCheckedChanged:{
             preemtive_checkBox.text = (preemtive_checkBox.checked)? "Preemtive":"Non-preemtive";
-            priority_rectangle.visible = (preemtive_checkBox.checked)? true: false;
         }
     }
 
@@ -120,7 +119,7 @@ Item {
 
         Rectangle {
             id: process_name_rectangle
-            color: "#ffffff"
+            color: "#7f8aa4c1"
             radius: 10.5
             border.width: 2
             Layout.preferredHeight: 21
@@ -151,7 +150,7 @@ Item {
         Rectangle {
             id: burst_time_rectangle
             x: 130
-            color: "#ffffff"
+            color: "#7f8aa4c1"
             radius: 10.5
             border.width: 2
             Layout.preferredHeight: 21
@@ -181,7 +180,7 @@ Item {
         Rectangle {
             id: arrival_time_rectangle
             x: 280
-            color: "#ffffff"
+            color: "#7f8aa4c1"
             radius: 10.5
             border.width: 2
             Layout.preferredHeight: 21
@@ -211,7 +210,7 @@ Item {
         Rectangle {
             id: priority_rectangle
             x: 400
-            color: "#ffffff"
+            color: "#7f8aa4c1"
             radius: 10.5
             border.width: 2
             Layout.preferredHeight: 21
@@ -241,7 +240,7 @@ Item {
         Rectangle {
             id: time_quantum_rectangle
             x: 555
-            color: "#ffffff"
+            color: "#7f8aa4c1"
             radius: 10.5
             border.width: 2
             Layout.preferredHeight: 21
@@ -430,6 +429,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.33000001311302185}
+    D{i:0;formeditorZoom:1.3300000429153442}
 }
 ##^##*/
