@@ -94,4 +94,36 @@ void TableModel::initTable(bool priority) {
     endInsertRows();
 }
 
+void TableModel::clearTable() {
+    int pNum = jobs.size();
+    while(pNum)
+    {
+        beginInsertRows(QModelIndex(), rowCount(), rowCount());
+        table.pop_back();
+        endInsertRows();
+        pNum--;
+    }
+    jobs.clear();
+}
+
+QPair<algorithmInfo, QList<Job>> TableModel::getJobs()
+{
+    QPair<algorithmInfo, QList<Job>> pair;
+    pair.first = s_algorithm;
+    pair.second = jobs;
+
+//    qDebug("%s", qUtf8Printable(pair.first.schedule_alg));
+//    qDebug ("%i", pair.first.timeSlice);
+//    qDebug ("%i", pair.first.isPreemtive);
+//    for(int i = 0; i < pair.second.size(); i++)
+//    {
+//            qDebug("%s", qUtf8Printable(pair.second[i].label()));
+//            qDebug ("%i", pair.second[i].duration());
+//            qDebug ("%i", pair.second[i].arrivalTime());
+//            qDebug ("%i", pair.second[i].priority());
+//    }
+    return pair;
+}
+
+
 

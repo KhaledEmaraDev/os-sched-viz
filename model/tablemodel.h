@@ -5,6 +5,7 @@
 #include <QObject>
 #include <iostream>
 #include <QQmlApplicationEngine>
+#include <QPair>
 
 #include "model/job.h"
 
@@ -49,6 +50,12 @@ public:
     Q_INVOKABLE void addProcess(QVector<QString> process);
 
     Q_INVOKABLE void removeProcess();
+
+    Q_INVOKABLE void clearTable();
+
+    QPair<algorithmInfo, QList<Job>> getJobs();
+
+
 
 
 private:

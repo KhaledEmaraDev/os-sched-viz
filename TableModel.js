@@ -65,5 +65,5 @@ function removeProcess()
 
 function clearTable()
 {
-
+    tableModel.clearTable();
 }
