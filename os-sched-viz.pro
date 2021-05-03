@@ -8,14 +8,17 @@ CONFIG += c++17
 
 HEADERS += \
     model/job.h \
+    model/tablemodel.h \
     model/timeline.h \
-    scheduler.h
+
+
 
 SOURCES += \
         main.cpp \
         model/job.cpp \
+    model/tablemodel.cpp \
         model/timeline.cpp \
-        scheduler.cpp
+
 
 RESOURCES += qml.qrc
 

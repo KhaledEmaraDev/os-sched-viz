@@ -3,6 +3,7 @@
 #include <QQuickItem>
 #include <QDebug>
 
+#include "model/tablemodel.h"
 #include "model/job.h"
 #include "model/timeline.h"
 
@@ -13,15 +14,18 @@ int main(int argc, char *argv[])
 #endif
 
     QApplication app(argc, argv);
-
     TimelineModel timelineModel;
     JobModel jobModel;
-
+    TableModel table_model;
     QQuickView view;
+
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     view.setInitialProperties({{"timelineModel", QVariant::fromValue(&timelineModel)},
-                               {"jobModel", QVariant::fromValue(&jobModel)}});
+                               {"jobModel", QVariant::fromValue(&jobModel)},
+                               {"tableModel", QVariant::fromValue(&table_model)}
+                             });
     view.setSource(QUrl(QStringLiteral("qrc:main.qml")));
+
 
     //    QObject *item = view.rootObject();
     //    QObject::connect(item, SIGNAL(addSignal()),
