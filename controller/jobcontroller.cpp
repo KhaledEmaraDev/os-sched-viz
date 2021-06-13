@@ -3,7 +3,7 @@
 #include <QList>
 #include <QPair>
 
-#include "scheduler.h"
+#include "controller/scheduler.h"
 
 JobController::JobController(QObject *parent)
     : QObject(parent)

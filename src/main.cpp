@@ -5,7 +5,7 @@
 
 #include "controller/jobcontroller.h"
 #include "model/jobmodel.h"
-#include "scheduler.h"
+#include "controller/scheduler.h"
 
 void test_algorthim() {
     Scheduler sc;
